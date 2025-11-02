@@ -1,0 +1,12 @@
+{
+    "workflows": [
+        {
+            "type": "textInput",
+            "name": "ComfyUI Shell Test",
+            "url": "comfy/workflows/comfyui-shell-test-api.json",
+            "textInputNodeId": "6",
+            "saveImageNodeId": "9"
+        }
+    ],
+    "outputDirectory": "../ComfyUI/outputs"
+}

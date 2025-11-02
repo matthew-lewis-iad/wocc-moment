@@ -1,0 +1,9 @@
+{
+    "type": "progress",
+    "data": {
+        "value": 20,
+        "max": 20,
+        "prompt_id": "e4b85f3a-3e03-43b0-9438-18eba51d1fc6",
+        "node": "3"
+    }
+}

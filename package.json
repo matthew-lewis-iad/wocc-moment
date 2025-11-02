@@ -1,0 +1,25 @@
+{
+  "name": "wocc-moment",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/matthew-lewis-iad/wocc-moment#readme",
+  "bugs": {
+    "url": "https://github.com/matthew-lewis-iad/wocc-moment/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matthew-lewis-iad/wocc-moment.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "fs-extra": "^11.3.2",
+    "socket.io": "^4.8.1"
+  }
+}

@@ -1,0 +1,11 @@
+{
+    "type": "status",
+    "data": {
+        "status": {
+            "exec_info": {
+                "queue_remaining": 0
+            }
+        },
+        "sid": "comfy-ui-manager"
+    }
+}
