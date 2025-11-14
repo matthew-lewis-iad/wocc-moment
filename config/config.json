@@ -10,14 +10,9 @@
         {
             "type": "cameraInput",
             "name": "Camera to Soccer Images",
-            "url": "comfy/workflows/Qwen_imageEdit2509_SoccerPlayer_Prompts.json",
-            "imageInputNodeId": "6",
-            "saveImageNodeId": "9"
-        },
-        {
-            "type": "imageInput",
-            "name": "Camera capture to image",
-            "url": "comfy/workflows/img2img-api.json"
+            "url": "comfy/workflows/Qwen_imageEdit2509_SoccerPlayer_Prompts-api.json",
+            "imageInputNodeId": "78",
+            "saveImageNodeId": "60"
         }
     ],
     "outputDirectory": "../ComfyUI/outputs"

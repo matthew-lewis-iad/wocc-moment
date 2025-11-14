@@ -5,6 +5,7 @@ window.onload = function()
     });
 
     $('#camera-capture-button').on('click', onCameraCaptureButtonClick);
+    $('#camera-capture-scrim').on('click', onCameraCaptureScrimClick);
 }
 
 function onConfigDataDidLoad(data)
@@ -70,10 +71,10 @@ function onWorkflowButtonClick(workflow)
     }
 }
 
-function startCameraCapture(workflow)
+function startCameraCapture()
 {
     $('#camera-capture').addClass('show');
-    navigator.mediaDevices.getUserMedia({ video: true })
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
     .then(function(stream) {
         $('#camera-video')[0].srcObject = stream;
     })
@@ -86,20 +87,35 @@ function onCameraCaptureButtonClick(workflow)
 {
     const canvas = document.getElementById('camera-canvas');
     const context = canvas.getContext('2d');
+    const video = $('#camera-video')[0];
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
     canvas.toBlob(function(blob) {
-        const reader = new FileReader();
-        reader.onloadend = function() {
-            // const base64data = reader.result.split(',')[1];
-            // workflow.data[workflow.imageInputNodeId].inputs.image = base64data;
-            // ComfyUIManager.startWorkflow(workflow);
-            // stream.getTracks().forEach(track => track.stop());
-            // $('#camera-capture').removeClass('show');
-        }
-        reader.readAsDataURL(blob);
+        ComfyUIManager.uploadImage(blob, onComfyUIImageUploaded);
     }, 'image/png');
+}
+
+function onCameraCaptureScrimClick()
+{
+    $('#camera-capture').removeClass('show');
+}
+
+function onComfyUIImageUploaded(data, filename)
+{
+    log('Image uploaded: ', data);
+    const workflow = window.currentWorkflow;
+    if (workflow && workflow.type == 'cameraInput')
+    {
+        workflow.data[workflow.imageInputNodeId].inputs.image = filename;
+        ComfyUIManager.startWorkflow(workflow);
+        const stream = $('#camera-video')[0].srcObject;
+        if (stream)
+        {
+            stream.getTracks().forEach(track => track.stop());
+        }
+        $('#camera-capture').removeClass('show');
+    }
 }
 
 function log(message, omitTimestamp = false)

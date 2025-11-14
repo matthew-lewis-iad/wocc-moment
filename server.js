@@ -41,16 +41,16 @@ app.get(/^(.+)$/, function (req, res) {
 
 /* Global Methods */
 
-function writeTextToFile(path, text, description, callback) {
-    var temp_path = path;
-    fs.outputFile(temp_path, text, function (err) {
-        if (err) {
-            console.log('error writing file ' + path + ' - ' + err);
-            return;
-        }
-        console.log(description + ' success');
-        if (callback != null) {
-            callback();
-        }
-    });
-}
+// function writeTextToFile(path, text, description, callback) {
+//     var temp_path = path;
+//     fs.outputFile(temp_path, text, function (err) {
+//         if (err) {
+//             console.log('error writing file ' + path + ' - ' + err);
+//             return;
+//         }
+//         console.log(description + ' success');
+//         if (callback != null) {
+//             callback();
+//         }
+//     });
+// }

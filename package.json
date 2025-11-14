@@ -19,7 +19,6 @@
   },
   "dependencies": {
     "express": "^5.1.0",
-    "fs-extra": "^11.3.2",
-    "socket.io": "^4.8.1"
+    "fs-extra": "^11.3.2"
   }
 }

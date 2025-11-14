@@ -1,7 +1,9 @@
 var ComfyUIManager = {
     CLIENT_ID: 'comfy-ui-manager',
-    websocketHostUrl: 'ws://127.0.0.1:8188',
-    apiHostUrl: 'http://127.0.0.1:8188',
+    // websocketHostUrl: 'ws://127.0.0.1:8188',
+    // apiHostUrl: 'http://127.0.0.1:8188',
+    websocketHostUrl: 'ws://10.0.0.170:8188',
+    apiHostUrl: 'http://10.0.0.170:8188',
     socket: null,
     init: function ()
     {
@@ -24,7 +26,7 @@ var ComfyUIManager = {
             }
             else if (eventData.type == 'progress_state')
             {
-                if (ComfyUIManager.currentWorkflow.type == 'textInput')
+                if (ComfyUIManager.currentWorkflow.type == 'textInput' || ComfyUIManager.currentWorkflow.type == 'cameraInput')
                 {
                     if (eventData.data?.nodes?.[ComfyUIManager.currentWorkflow.saveImageNodeId]?.state == 'finished')
                     {
@@ -90,8 +92,23 @@ var ComfyUIManager = {
     {
         if (this.socket && this.socket.readyState === WebSocket.OPEN)
         {
+            const filename = moment().format('YYYYMMDD_HHmmss') + '.png';
             const formData = new FormData();
-            formData.append('file', imageFile);
+            formData.append('image', imageFile, filename);
+            fetch(`${this.apiHostUrl}/upload/image`, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                log('ComfyUIManager : Image upload success with URL = ' + data.url);
+                if (callback) {
+                    callback(data, filename);
+                }
+            })
+            .catch(error => {
+                log('ComfyUIManager : Image upload error: ' + JSON.stringify(error));
+            });
         }
     },
 
@@ -128,15 +145,17 @@ var ComfyUIManager = {
         const outputContainer = $('#output-container');
         outputContainer.empty();
 
-        if (ComfyUIManager.currentWorkflow.type == 'textInput')
+        if (ComfyUIManager.currentWorkflow.type == 'textInput' || ComfyUIManager.currentWorkflow.type == 'cameraInput')
         {
             const saveImageNodeId = ComfyUIManager.currentWorkflow.saveImageNodeId;
-            const filename = historyData.outputs?.[saveImageNodeId]?.images?.[0]?.filename;
-            if (filename)
+            const images = historyData.outputs?.[saveImageNodeId]?.images;
+            if (images && images.length > 0)
             {
-                const imageUrl = `${ComfyUIManager.apiHostUrl}/view?filename=${filename}&subfolder=&type=output`;
-                const outputImg = UI.createImg({src: imageUrl, classes: 'output-image'});
-                outputContainer.append(outputImg);
+                images.forEach(image => {
+                    const imageUrl = `${ComfyUIManager.apiHostUrl}/view?filename=${image.filename}&subfolder=${image.subfolder}&type=${image.type}`;
+                    const outputImg = UI.createImg({src: imageUrl, classes: 'output-image'});
+                    outputContainer.append(outputImg);
+                });
             }
         }
     }
