@@ -3,6 +3,8 @@ window.onload = function()
     $.getJSON('config/config.json', onConfigDataDidLoad).fail(function() {
         log('Error parsing admin.config.json');
     });
+
+    $('#camera-capture-button').on('click', onCameraCaptureButtonClick);
 }
 
 function onConfigDataDidLoad(data)
@@ -57,7 +59,47 @@ function init()
 function onWorkflowButtonClick(workflow)
 {
     log('Starting workflow: ' + workflow.name);
-    ComfyUIManager.startWorkflow(workflow);
+    window.currentWorkflow = workflow;
+    if (workflow.type == 'cameraInput')
+    {
+        startCameraCapture(workflow);
+    }
+    else
+    {
+        ComfyUIManager.startWorkflow(workflow);
+    }
+}
+
+function startCameraCapture(workflow)
+{
+    $('#camera-capture').addClass('show');
+    navigator.mediaDevices.getUserMedia({ video: true })
+    .then(function(stream) {
+        $('#camera-video')[0].srcObject = stream;
+    })
+    .catch(function(err) {
+        log('Error accessing camera: ' + err);
+    });
+}
+
+function onCameraCaptureButtonClick(workflow)
+{
+    const canvas = document.getElementById('camera-canvas');
+    const context = canvas.getContext('2d');
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    canvas.toBlob(function(blob) {
+        const reader = new FileReader();
+        reader.onloadend = function() {
+            // const base64data = reader.result.split(',')[1];
+            // workflow.data[workflow.imageInputNodeId].inputs.image = base64data;
+            // ComfyUIManager.startWorkflow(workflow);
+            // stream.getTracks().forEach(track => track.stop());
+            // $('#camera-capture').removeClass('show');
+        }
+        reader.readAsDataURL(blob);
+    }, 'image/png');
 }
 
 function log(message, omitTimestamp = false)

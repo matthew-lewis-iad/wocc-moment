@@ -2,9 +2,16 @@
     "workflows": [
         {
             "type": "textInput",
-            "name": "Text to image",
+            "name": "Text Prompt to Image",
             "url": "comfy/workflows/text2img-api.json",
             "textInputNodeId": "6",
+            "saveImageNodeId": "9"
+        },
+        {
+            "type": "cameraInput",
+            "name": "Camera to Soccer Images",
+            "url": "comfy/workflows/Qwen_imageEdit2509_SoccerPlayer_Prompts.json",
+            "imageInputNodeId": "6",
             "saveImageNodeId": "9"
         },
         {

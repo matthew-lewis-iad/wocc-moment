@@ -98,6 +98,7 @@ body {
 
 #workflows {
     display: flex;
+    flex-direction: column;
     gap: 20px;
 }
 
@@ -129,6 +130,55 @@ body {
     background-color: magenta;
     border-radius: 8px;
     transition: width .2s ease;
+}
+
+#camera-capture {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    opacity: 0;
+    pointer-events: none;
+    transition: all .3s ease;
+}
+#camera-capture.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#camera-capture-scrim {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+#camera-video {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    height: 80vh;
+    /* box-shadow: 0 0 0 4px white; */
+    /* border-radius: 8px; */
+}
+
+#camera-capture-button {
+    position: absolute;
+    left: 50%;
+    top: calc(90vh + 20px);
+    transform: translateX(-50%);
+    font-size: 18px;
+    border-radius: 8px;
+    font-family: 'Andale';
+    background: white;
+    border: 1px solid gray;
+    cursor: pointer;
+    padding: 8px 12px;
 }
 
 #output-container {

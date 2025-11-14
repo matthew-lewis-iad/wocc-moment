@@ -86,6 +86,15 @@ var ComfyUIManager = {
         }
     },
 
+    uploadImage: function (imageFile, callback)
+    {
+        if (this.socket && this.socket.readyState === WebSocket.OPEN)
+        {
+            const formData = new FormData();
+            formData.append('file', imageFile);
+        }
+    },
+
     getHistory: function (promptId)
     {
         log('ComfyUIManager : getHistory for promptId ' + promptId);
