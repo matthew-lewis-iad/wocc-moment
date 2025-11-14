@@ -1,0 +1,232 @@
+{
+  "3": {
+    "inputs": {
+      "seed": 2000,
+      "steps": 4,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "75",
+        0
+      ],
+      "positive": [
+        "111",
+        0
+      ],
+      "negative": [
+        "110",
+        0
+      ],
+      "latent_image": [
+        "112",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "8": {
+    "inputs": {
+      "samples": [
+        "3",
+        0
+      ],
+      "vae": [
+        "39",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "37": {
+    "inputs": {
+      "unet_name": "qwen_image_edit_2509_fp8_e4m3fn.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Load Diffusion Model"
+    }
+  },
+  "38": {
+    "inputs": {
+      "clip_name": "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+      "type": "qwen_image",
+      "device": "default"
+    },
+    "class_type": "CLIPLoader",
+    "_meta": {
+      "title": "Load CLIP"
+    }
+  },
+  "39": {
+    "inputs": {
+      "vae_name": "qwen_image_vae.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE"
+    }
+  },
+  "60": {
+    "inputs": {
+      "filename_prefix": "ComfyUI",
+      "images": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "66": {
+    "inputs": {
+      "shift": 3,
+      "model": [
+        "89",
+        0
+      ]
+    },
+    "class_type": "ModelSamplingAuraFlow",
+    "_meta": {
+      "title": "ModelSamplingAuraFlow"
+    }
+  },
+  "75": {
+    "inputs": {
+      "strength": 1,
+      "model": [
+        "66",
+        0
+      ]
+    },
+    "class_type": "CFGNorm",
+    "_meta": {
+      "title": "CFGNorm"
+    }
+  },
+  "78": {
+    "inputs": {
+      "image": "test_candid_headshot.webp"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "88": {
+    "inputs": {
+      "pixels": [
+        "93",
+        0
+      ],
+      "vae": [
+        "39",
+        0
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "VAE Encode"
+    }
+  },
+  "89": {
+    "inputs": {
+      "lora_name": "Qwen-Image-Edit-2509-Lightning-4steps-V1.0-bf16.safetensors",
+      "strength_model": 1,
+      "model": [
+        "37",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "LoraLoaderModelOnly"
+    }
+  },
+  "93": {
+    "inputs": {
+      "upscale_method": "lanczos",
+      "megapixels": 1,
+      "image": [
+        "78",
+        0
+      ]
+    },
+    "class_type": "ImageScaleToTotalPixels",
+    "_meta": {
+      "title": "ImageScaleToTotalPixels"
+    }
+  },
+  "110": {
+    "inputs": {
+      "prompt": "",
+      "clip": [
+        "38",
+        0
+      ],
+      "vae": [
+        "39",
+        0
+      ],
+      "image1": [
+        "93",
+        0
+      ]
+    },
+    "class_type": "TextEncodeQwenImageEditPlus",
+    "_meta": {
+      "title": "TextEncodeQwenImageEditPlus"
+    }
+  },
+  "111": {
+    "inputs": {
+      "prompt": "Keep the face and hair the same. This person is a soccer player performing an acrobatic kick in mid-air, realistic motion, powerful pose, dynamic lighting, rain droplets frozen in motion, blank soccer uniform with a blank red jersey, black shorts, and red cleats, realistic soccer ball, illuminated stadium background, cinematic atmosphere, dramatic spotlight, sports photography style, ultra-realistic textures, sharp focus, 8k resolution, volumetric lighting, dynamic energy, realism, A dark, blurred background emphasizes the player and creates a striking contrast. Remove all logos from the uniform.\n",
+      "clip": [
+        "38",
+        0
+      ],
+      "vae": [
+        "39",
+        0
+      ],
+      "image1": [
+        "93",
+        0
+      ]
+    },
+    "class_type": "TextEncodeQwenImageEditPlus",
+    "_meta": {
+      "title": "TextEncodeQwenImageEditPlus"
+    }
+  },
+  "112": {
+    "inputs": {
+      "width": 1024,
+      "height": 1024,
+      "batch_size": 4
+    },
+    "class_type": "EmptySD3LatentImage",
+    "_meta": {
+      "title": "EmptySD3LatentImage"
+    }
+  },
+  "399": {
+    "inputs": {
+      "prompt": "\n1\nKeep the face and hair the same. Soccer player mid-action in a dramatic night scene, wearing a blank red jersey and ornage cleats, illuminated by intense stadium lights. The player is looking at the camera, skillfully controlling the ball with a dynamic pose. Raindrops and splashes are visible, enhancing the intensity of the moment. A dark, blurred background emphasizes the player and creates a striking contrast. Remove all logos from the uniform.\n\n2\nKeep the face and hair the same. This person is a soccer player performing an acrobatic kick in mid-air, realistic motion, powerful pose, dynamic lighting, rain droplets frozen in motion, blank soccer uniform with a blank red jersey, black shorts, and red cleats, realistic soccer ball, illuminated stadium background, cinematic atmosphere, dramatic spotlight, sports photography style, ultra-realistic textures, sharp focus, 8k resolution, volumetric lighting, dynamic energy, realism, A dark, blurred background emphasizes the player and creates a striking contrast. Remove all logos from the uniform.\n\n\n3\nKeep the face and hair the same. This person is a soccer goalkeeper diving horizontally to save a ball near the goalpost, intense sports action, close-up perspective, stadium full of cheering crowd, Raindrops are visible, enhancing the intensity of the moment, dramatic motion, blank red goalkeeper uniform, blank gloves, realistic soccer ball frozen in motion, grass turf field, cinematic lighting, ultra-realistic textures, HDR. A dark, blurred background emphasizes the player and creates a striking contrast. Remove all logos from the uniform."
+    },
+    "class_type": "TextEncodeQwenImageEditPlus",
+    "_meta": {
+      "title": "TextEncodeQwenImageEditPlus"
+    }
+  }
+}
