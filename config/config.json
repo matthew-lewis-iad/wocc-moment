@@ -2,10 +2,15 @@
     "workflows": [
         {
             "type": "textInput",
-            "name": "ComfyUI Shell Test",
-            "url": "comfy/workflows/comfyui-shell-test-api.json",
+            "name": "Text to image",
+            "url": "comfy/workflows/text2img-api.json",
             "textInputNodeId": "6",
             "saveImageNodeId": "9"
+        },
+        {
+            "type": "imageInput",
+            "name": "Camera capture to image",
+            "url": "comfy/workflows/img2img-api.json"
         }
     ],
     "outputDirectory": "../ComfyUI/outputs"
