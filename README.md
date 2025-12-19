@@ -14,5 +14,5 @@ Reference the [Github repo](https://github.com/comfyanonymous/ComfyUI)
 
 ## Running
 - Activate python virtual environment `.\.venv\Scripts\activate`
-- Run in api mode `python main.py --listen 127.0.0.1 --port 8188`
+- Run in api mode `python main.py --listen 0.0.0.0 --port 8188 --enable-cors-header --front-end-version Comfy-Org/ComfyUI_frontend@latest`
 - Run GUI `python main.py --front-end-version Comfy-Org/ComfyUI_frontend@latest`
