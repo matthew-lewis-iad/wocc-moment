@@ -124,7 +124,7 @@
   },
   "109": {
     "inputs": {
-      "image": "ComfyUI_00001_.png"
+      "image": "../output/moment_pose/ComfyUI_00003_.png"
     },
     "class_type": "LoadImage",
     "_meta": {
@@ -244,7 +244,7 @@
   },
   "136": {
     "inputs": {
-      "filename_prefix": "ComfyUI",
+      "filename_prefix": "moment_final/ComfyUI",
       "images": [
         "140",
         0

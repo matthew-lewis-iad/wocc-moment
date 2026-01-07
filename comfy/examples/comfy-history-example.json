@@ -1,83 +1,37 @@
 {
-    "97f01ce3-9e9a-4298-ad6d-827f70dd3220": {
+    "67bbfa48-fc82-4de5-83e6-50cabe385923": {
         "prompt": [
-            2,
-            "97f01ce3-9e9a-4298-ad6d-827f70dd3220",
+            15,
+            "67bbfa48-fc82-4de5-83e6-50cabe385923",
             {
                 "3": {
                     "inputs": {
-                        "seed": 534368940833781,
-                        "steps": 20,
-                        "cfg": 8,
-                        "sampler_name": "euler",
-                        "scheduler": "normal",
+                        "seed": 2001,
+                        "steps": 10,
+                        "cfg": 5,
+                        "sampler_name": "er_sde",
+                        "scheduler": "beta",
                         "denoise": 1,
                         "model": [
-                            "4",
+                            "102",
                             0
                         ],
                         "positive": [
-                            "6",
+                            "113",
                             0
                         ],
                         "negative": [
-                            "7",
+                            "114",
                             0
                         ],
                         "latent_image": [
-                            "5",
+                            "101",
                             0
                         ]
                     },
                     "class_type": "KSampler",
                     "_meta": {
                         "title": "KSampler"
-                    }
-                },
-                "4": {
-                    "inputs": {
-                        "ckpt_name": "v1-5-pruned-emaonly-fp16.safetensors"
-                    },
-                    "class_type": "CheckpointLoaderSimple",
-                    "_meta": {
-                        "title": "Load Checkpoint"
-                    }
-                },
-                "5": {
-                    "inputs": {
-                        "width": 512,
-                        "height": 512,
-                        "batch_size": 1
-                    },
-                    "class_type": "EmptyLatentImage",
-                    "_meta": {
-                        "title": "Empty Latent Image"
-                    }
-                },
-                "6": {
-                    "inputs": {
-                        "text": "beautiful scenery nature glass bottle landscape, , purple galaxy bottle,",
-                        "clip": [
-                            "4",
-                            1
-                        ]
-                    },
-                    "class_type": "CLIPTextEncode",
-                    "_meta": {
-                        "title": "CLIP Text Encode (Prompt)"
-                    }
-                },
-                "7": {
-                    "inputs": {
-                        "text": "text, watermark",
-                        "clip": [
-                            "4",
-                            1
-                        ]
-                    },
-                    "class_type": "CLIPTextEncode",
-                    "_meta": {
-                        "title": "CLIP Text Encode (Prompt)"
                     }
                 },
                 "8": {
@@ -87,8 +41,8 @@
                             0
                         ],
                         "vae": [
-                            "4",
-                            2
+                            "39",
+                            0
                         ]
                     },
                     "class_type": "VAEDecode",
@@ -96,11 +50,208 @@
                         "title": "VAE Decode"
                     }
                 },
-                "9": {
+                "38": {
                     "inputs": {
-                        "filename_prefix": "ComfyUI",
-                        "images": [
+                        "clip_name": "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+                        "type": "qwen_image",
+                        "device": "default"
+                    },
+                    "class_type": "CLIPLoader",
+                    "_meta": {
+                        "title": "Load CLIP"
+                    }
+                },
+                "39": {
+                    "inputs": {
+                        "vae_name": "qwen_image_vae.safetensors"
+                    },
+                    "class_type": "VAELoader",
+                    "_meta": {
+                        "title": "Load VAE"
+                    }
+                },
+                "66": {
+                    "inputs": {
+                        "shift": 2,
+                        "model": [
+                            "115",
+                            0
+                        ]
+                    },
+                    "class_type": "ModelSamplingAuraFlow",
+                    "_meta": {
+                        "title": "ModelSamplingAuraFlow"
+                    }
+                },
+                "100": {
+                    "inputs": {
+                        "upscale_method": "lanczos",
+                        "megapixels": 1.25,
+                        "resolution_steps": 1,
+                        "image": [
+                            "109",
+                            0
+                        ]
+                    },
+                    "class_type": "ImageScaleToTotalPixels",
+                    "_meta": {
+                        "title": "ImageScaleToTotalPixels"
+                    }
+                },
+                "101": {
+                    "inputs": {
+                        "pixels": [
+                            "100",
+                            0
+                        ],
+                        "vae": [
+                            "39",
+                            0
+                        ]
+                    },
+                    "class_type": "VAEEncode",
+                    "_meta": {
+                        "title": "VAE Encode"
+                    }
+                },
+                "102": {
+                    "inputs": {
+                        "strength": 1,
+                        "model": [
+                            "66",
+                            0
+                        ]
+                    },
+                    "class_type": "CFGNorm",
+                    "_meta": {
+                        "title": "CFGNorm"
+                    }
+                },
+                "109": {
+                    "inputs": {
+                        "image": "../output/moment_pose/ComfyUI_00003_.png"
+                    },
+                    "class_type": "LoadImage",
+                    "_meta": {
+                        "title": "Load Image"
+                    }
+                },
+                "113": {
+                    "inputs": {
+                        "prompt": [
+                            "121",
+                            0
+                        ],
+                        "clip": [
+                            "38",
+                            0
+                        ],
+                        "vae": [
+                            "39",
+                            0
+                        ],
+                        "image1": [
+                            "100",
+                            0
+                        ]
+                    },
+                    "class_type": "TextEncodeQwenImageEditPlus",
+                    "_meta": {
+                        "title": "TextEncodeQwenImageEditPlus"
+                    }
+                },
+                "114": {
+                    "inputs": {
+                        "prompt": "",
+                        "clip": [
+                            "38",
+                            0
+                        ],
+                        "vae": [
+                            "39",
+                            0
+                        ],
+                        "image1": [
+                            "100",
+                            0
+                        ]
+                    },
+                    "class_type": "TextEncodeQwenImageEditPlus",
+                    "_meta": {
+                        "title": "TextEncodeQwenImageEditPlus"
+                    }
+                },
+                "115": {
+                    "inputs": {
+                        "strength": 1,
+                        "model": [
+                            "125",
+                            0
+                        ]
+                    },
+                    "class_type": "DifferentialDiffusion",
+                    "_meta": {
+                        "title": "Differential Diffusion"
+                    }
+                },
+                "121": {
+                    "inputs": {
+                        "string_a": "白底图转场景",
+                        "string_b": "shallow depth of field, macro lens shot, in a crowd of fans at a stadium, red and white confetti falling down around the person, birght blue sky, the background is blurry.",
+                        "delimiter": ", "
+                    },
+                    "class_type": "StringConcatenate",
+                    "_meta": {
+                        "title": "Trigger Word + Positive Prompt"
+                    }
+                },
+                "123": {
+                    "inputs": {
+                        "unet_name": "qwenEdit2509NewVersion_fp16.safetensors",
+                        "weight_dtype": "default"
+                    },
+                    "class_type": "UNETLoader",
+                    "_meta": {
+                        "title": "Load Diffusion Model"
+                    }
+                },
+                "125": {
+                    "inputs": {
+                        "lora_name": "Qwen-Edit-Relight.safetensors",
+                        "strength_model": 1.5,
+                        "model": [
+                            "123",
+                            0
+                        ]
+                    },
+                    "class_type": "LoraLoaderModelOnly",
+                    "_meta": {
+                        "title": "LoraLoaderModelOnly"
+                    }
+                },
+                "129": {
+                    "inputs": {
+                        "temperature": 5,
+                        "hue": 0,
+                        "brightness": 0,
+                        "contrast": -5,
+                        "saturation": -5,
+                        "gamma": 0.8,
+                        "image": [
                             "8",
+                            0
+                        ]
+                    },
+                    "class_type": "ColorCorrect",
+                    "_meta": {
+                        "title": "Color Correct"
+                    }
+                },
+                "136": {
+                    "inputs": {
+                        "filename_prefix": "moment_final/ComfyUI",
+                        "images": [
+                            "140",
                             0
                         ]
                     },
@@ -108,19 +259,35 @@
                     "_meta": {
                         "title": "Save Image"
                     }
+                },
+                "140": {
+                    "inputs": {
+                        "width": 1024,
+                        "height": 1024,
+                        "x": 0,
+                        "y": 0,
+                        "image": [
+                            "129",
+                            0
+                        ]
+                    },
+                    "class_type": "ImageCrop",
+                    "_meta": {
+                        "title": "Image Crop"
+                    }
                 }
             },
             {},
             [
-                "9"
+                "136"
             ]
         ],
         "outputs": {
-            "9": {
+            "136": {
                 "images": [
                     {
                         "filename": "ComfyUI_00001_.png",
-                        "subfolder": "",
+                        "subfolder": "moment_final",
                         "type": "output"
                     }
                 ]
@@ -133,1429 +300,37 @@
                 [
                     "execution_start",
                     {
-                        "prompt_id": "97f01ce3-9e9a-4298-ad6d-827f70dd3220",
-                        "timestamp": 1762093126369
+                        "prompt_id": "67bbfa48-fc82-4de5-83e6-50cabe385923",
+                        "timestamp": 1767461630199
                     }
                 ],
                 [
                     "execution_cached",
                     {
-                        "nodes": [],
-                        "prompt_id": "97f01ce3-9e9a-4298-ad6d-827f70dd3220",
-                        "timestamp": 1762093126374
+                        "nodes": [
+                            "38",
+                            "39"
+                        ],
+                        "prompt_id": "67bbfa48-fc82-4de5-83e6-50cabe385923",
+                        "timestamp": 1767461631384
                     }
                 ],
                 [
                     "execution_success",
                     {
-                        "prompt_id": "97f01ce3-9e9a-4298-ad6d-827f70dd3220",
-                        "timestamp": 1762093153558
+                        "prompt_id": "67bbfa48-fc82-4de5-83e6-50cabe385923",
+                        "timestamp": 1767461845545
                     }
                 ]
             ]
         },
         "meta": {
-            "9": {
-                "node_id": "9",
-                "display_node": "9",
+            "136": {
+                "node_id": "136",
+                "display_node": "136",
                 "parent_node": null,
-                "real_node_id": "9"
+                "real_node_id": "136"
             }
         }
-    },
-    "fb30d260-70e6-4324-aae6-844b8f1293c3": {
-        "prompt": [
-            3,
-            "fb30d260-70e6-4324-aae6-844b8f1293c3",
-            {
-                "3": {
-                    "inputs": {
-                        "seed": 534368940833781,
-                        "steps": 20,
-                        "cfg": 8,
-                        "sampler_name": "euler",
-                        "scheduler": "normal",
-                        "denoise": 1,
-                        "model": [
-                            "4",
-                            0
-                        ],
-                        "positive": [
-                            "6",
-                            0
-                        ],
-                        "negative": [
-                            "7",
-                            0
-                        ],
-                        "latent_image": [
-                            "5",
-                            0
-                        ]
-                    },
-                    "class_type": "KSampler",
-                    "_meta": {
-                        "title": "KSampler"
-                    }
-                },
-                "4": {
-                    "inputs": {
-                        "ckpt_name": "v1-5-pruned-emaonly-fp16.safetensors"
-                    },
-                    "class_type": "CheckpointLoaderSimple",
-                    "_meta": {
-                        "title": "Load Checkpoint"
-                    }
-                },
-                "5": {
-                    "inputs": {
-                        "width": 512,
-                        "height": 512,
-                        "batch_size": 1
-                    },
-                    "class_type": "EmptyLatentImage",
-                    "_meta": {
-                        "title": "Empty Latent Image"
-                    }
-                },
-                "6": {
-                    "inputs": {
-                        "text": "beautiful scenery nature glass bottle landscape, , purple galaxy bottle,",
-                        "clip": [
-                            "4",
-                            1
-                        ]
-                    },
-                    "class_type": "CLIPTextEncode",
-                    "_meta": {
-                        "title": "CLIP Text Encode (Prompt)"
-                    }
-                },
-                "7": {
-                    "inputs": {
-                        "text": "text, watermark",
-                        "clip": [
-                            "4",
-                            1
-                        ]
-                    },
-                    "class_type": "CLIPTextEncode",
-                    "_meta": {
-                        "title": "CLIP Text Encode (Prompt)"
-                    }
-                },
-                "8": {
-                    "inputs": {
-                        "samples": [
-                            "3",
-                            0
-                        ],
-                        "vae": [
-                            "4",
-                            2
-                        ]
-                    },
-                    "class_type": "VAEDecode",
-                    "_meta": {
-                        "title": "VAE Decode"
-                    }
-                },
-                "9": {
-                    "inputs": {
-                        "filename_prefix": "ComfyUI",
-                        "images": [
-                            "8",
-                            0
-                        ]
-                    },
-                    "class_type": "SaveImage",
-                    "_meta": {
-                        "title": "Save Image"
-                    }
-                }
-            },
-            {},
-            [
-                "9"
-            ]
-        ],
-        "outputs": {},
-        "status": {
-            "status_str": "success",
-            "completed": true,
-            "messages": [
-                [
-                    "execution_start",
-                    {
-                        "prompt_id": "fb30d260-70e6-4324-aae6-844b8f1293c3",
-                        "timestamp": 1762093443292
-                    }
-                ],
-                [
-                    "execution_cached",
-                    {
-                        "nodes": [
-                            "3",
-                            "4",
-                            "5",
-                            "6",
-                            "7",
-                            "8",
-                            "9"
-                        ],
-                        "prompt_id": "fb30d260-70e6-4324-aae6-844b8f1293c3",
-                        "timestamp": 1762093443294
-                    }
-                ],
-                [
-                    "execution_success",
-                    {
-                        "prompt_id": "fb30d260-70e6-4324-aae6-844b8f1293c3",
-                        "timestamp": 1762093443295
-                    }
-                ]
-            ]
-        },
-        "meta": {}
-    },
-    "5d4aaeb1-7df1-4b5a-9c1a-6a1ff6ebf2c1": {
-        "prompt": [
-            4,
-            "5d4aaeb1-7df1-4b5a-9c1a-6a1ff6ebf2c1",
-            {
-                "3": {
-                    "inputs": {
-                        "seed": 534368940833781,
-                        "steps": 20,
-                        "cfg": 8,
-                        "sampler_name": "euler",
-                        "scheduler": "normal",
-                        "denoise": 1,
-                        "model": [
-                            "4",
-                            0
-                        ],
-                        "positive": [
-                            "6",
-                            0
-                        ],
-                        "negative": [
-                            "7",
-                            0
-                        ],
-                        "latent_image": [
-                            "5",
-                            0
-                        ]
-                    },
-                    "class_type": "KSampler",
-                    "_meta": {
-                        "title": "KSampler"
-                    }
-                },
-                "4": {
-                    "inputs": {
-                        "ckpt_name": "v1-5-pruned-emaonly-fp16.safetensors"
-                    },
-                    "class_type": "CheckpointLoaderSimple",
-                    "_meta": {
-                        "title": "Load Checkpoint"
-                    }
-                },
-                "5": {
-                    "inputs": {
-                        "width": 512,
-                        "height": 512,
-                        "batch_size": 1
-                    },
-                    "class_type": "EmptyLatentImage",
-                    "_meta": {
-                        "title": "Empty Latent Image"
-                    }
-                },
-                "6": {
-                    "inputs": {
-                        "text": "beautiful scenery nature glass bottle landscape, , purple galaxy bottle,",
-                        "clip": [
-                            "4",
-                            1
-                        ]
-                    },
-                    "class_type": "CLIPTextEncode",
-                    "_meta": {
-                        "title": "CLIP Text Encode (Prompt)"
-                    }
-                },
-                "7": {
-                    "inputs": {
-                        "text": "text, watermark",
-                        "clip": [
-                            "4",
-                            1
-                        ]
-                    },
-                    "class_type": "CLIPTextEncode",
-                    "_meta": {
-                        "title": "CLIP Text Encode (Prompt)"
-                    }
-                },
-                "8": {
-                    "inputs": {
-                        "samples": [
-                            "3",
-                            0
-                        ],
-                        "vae": [
-                            "4",
-                            2
-                        ]
-                    },
-                    "class_type": "VAEDecode",
-                    "_meta": {
-                        "title": "VAE Decode"
-                    }
-                },
-                "9": {
-                    "inputs": {
-                        "filename_prefix": "ComfyUI",
-                        "images": [
-                            "8",
-                            0
-                        ]
-                    },
-                    "class_type": "SaveImage",
-                    "_meta": {
-                        "title": "Save Image"
-                    }
-                }
-            },
-            {},
-            [
-                "9"
-            ]
-        ],
-        "outputs": {},
-        "status": {
-            "status_str": "success",
-            "completed": true,
-            "messages": [
-                [
-                    "execution_start",
-                    {
-                        "prompt_id": "5d4aaeb1-7df1-4b5a-9c1a-6a1ff6ebf2c1",
-                        "timestamp": 1762094316890
-                    }
-                ],
-                [
-                    "execution_cached",
-                    {
-                        "nodes": [
-                            "3",
-                            "4",
-                            "5",
-                            "6",
-                            "7",
-                            "8",
-                            "9"
-                        ],
-                        "prompt_id": "5d4aaeb1-7df1-4b5a-9c1a-6a1ff6ebf2c1",
-                        "timestamp": 1762094316892
-                    }
-                ],
-                [
-                    "execution_success",
-                    {
-                        "prompt_id": "5d4aaeb1-7df1-4b5a-9c1a-6a1ff6ebf2c1",
-                        "timestamp": 1762094316892
-                    }
-                ]
-            ]
-        },
-        "meta": {}
-    },
-    "a0f6cc7a-e050-4a13-9faf-1c2b5c8237e7": {
-        "prompt": [
-            5,
-            "a0f6cc7a-e050-4a13-9faf-1c2b5c8237e7",
-            {
-                "3": {
-                    "inputs": {
-                        "seed": 534368940833781,
-                        "steps": 20,
-                        "cfg": 8,
-                        "sampler_name": "euler",
-                        "scheduler": "normal",
-                        "denoise": 1,
-                        "model": [
-                            "4",
-                            0
-                        ],
-                        "positive": [
-                            "6",
-                            0
-                        ],
-                        "negative": [
-                            "7",
-                            0
-                        ],
-                        "latent_image": [
-                            "5",
-                            0
-                        ]
-                    },
-                    "class_type": "KSampler",
-                    "_meta": {
-                        "title": "KSampler"
-                    }
-                },
-                "4": {
-                    "inputs": {
-                        "ckpt_name": "v1-5-pruned-emaonly-fp16.safetensors"
-                    },
-                    "class_type": "CheckpointLoaderSimple",
-                    "_meta": {
-                        "title": "Load Checkpoint"
-                    }
-                },
-                "5": {
-                    "inputs": {
-                        "width": 512,
-                        "height": 512,
-                        "batch_size": 1
-                    },
-                    "class_type": "EmptyLatentImage",
-                    "_meta": {
-                        "title": "Empty Latent Image"
-                    }
-                },
-                "6": {
-                    "inputs": {
-                        "text": "beautiful scenery nature glass bottle landscape, , purple galaxy bottle,",
-                        "clip": [
-                            "4",
-                            1
-                        ]
-                    },
-                    "class_type": "CLIPTextEncode",
-                    "_meta": {
-                        "title": "CLIP Text Encode (Prompt)"
-                    }
-                },
-                "7": {
-                    "inputs": {
-                        "text": "text, watermark",
-                        "clip": [
-                            "4",
-                            1
-                        ]
-                    },
-                    "class_type": "CLIPTextEncode",
-                    "_meta": {
-                        "title": "CLIP Text Encode (Prompt)"
-                    }
-                },
-                "8": {
-                    "inputs": {
-                        "samples": [
-                            "3",
-                            0
-                        ],
-                        "vae": [
-                            "4",
-                            2
-                        ]
-                    },
-                    "class_type": "VAEDecode",
-                    "_meta": {
-                        "title": "VAE Decode"
-                    }
-                },
-                "9": {
-                    "inputs": {
-                        "filename_prefix": "ComfyUI",
-                        "images": [
-                            "8",
-                            0
-                        ]
-                    },
-                    "class_type": "SaveImage",
-                    "_meta": {
-                        "title": "Save Image"
-                    }
-                }
-            },
-            {},
-            [
-                "9"
-            ]
-        ],
-        "outputs": {},
-        "status": {
-            "status_str": "success",
-            "completed": true,
-            "messages": [
-                [
-                    "execution_start",
-                    {
-                        "prompt_id": "a0f6cc7a-e050-4a13-9faf-1c2b5c8237e7",
-                        "timestamp": 1762094363657
-                    }
-                ],
-                [
-                    "execution_cached",
-                    {
-                        "nodes": [
-                            "3",
-                            "4",
-                            "5",
-                            "6",
-                            "7",
-                            "8",
-                            "9"
-                        ],
-                        "prompt_id": "a0f6cc7a-e050-4a13-9faf-1c2b5c8237e7",
-                        "timestamp": 1762094363659
-                    }
-                ],
-                [
-                    "execution_success",
-                    {
-                        "prompt_id": "a0f6cc7a-e050-4a13-9faf-1c2b5c8237e7",
-                        "timestamp": 1762094363659
-                    }
-                ]
-            ]
-        },
-        "meta": {}
-    },
-    "68c7fe9a-1678-48e5-9216-9929f124f77c": {
-        "prompt": [
-            6,
-            "68c7fe9a-1678-48e5-9216-9929f124f77c",
-            {
-                "3": {
-                    "inputs": {
-                        "seed": 534368940833781,
-                        "steps": 20,
-                        "cfg": 8,
-                        "sampler_name": "euler",
-                        "scheduler": "normal",
-                        "denoise": 1,
-                        "model": [
-                            "4",
-                            0
-                        ],
-                        "positive": [
-                            "6",
-                            0
-                        ],
-                        "negative": [
-                            "7",
-                            0
-                        ],
-                        "latent_image": [
-                            "5",
-                            0
-                        ]
-                    },
-                    "class_type": "KSampler",
-                    "_meta": {
-                        "title": "KSampler"
-                    }
-                },
-                "4": {
-                    "inputs": {
-                        "ckpt_name": "v1-5-pruned-emaonly-fp16.safetensors"
-                    },
-                    "class_type": "CheckpointLoaderSimple",
-                    "_meta": {
-                        "title": "Load Checkpoint"
-                    }
-                },
-                "5": {
-                    "inputs": {
-                        "width": 512,
-                        "height": 512,
-                        "batch_size": 1
-                    },
-                    "class_type": "EmptyLatentImage",
-                    "_meta": {
-                        "title": "Empty Latent Image"
-                    }
-                },
-                "6": {
-                    "inputs": {
-                        "text": "beautiful scenery nature glass bottle landscape, , purple galaxy bottle,",
-                        "clip": [
-                            "4",
-                            1
-                        ]
-                    },
-                    "class_type": "CLIPTextEncode",
-                    "_meta": {
-                        "title": "CLIP Text Encode (Prompt)"
-                    }
-                },
-                "7": {
-                    "inputs": {
-                        "text": "text, watermark",
-                        "clip": [
-                            "4",
-                            1
-                        ]
-                    },
-                    "class_type": "CLIPTextEncode",
-                    "_meta": {
-                        "title": "CLIP Text Encode (Prompt)"
-                    }
-                },
-                "8": {
-                    "inputs": {
-                        "samples": [
-                            "3",
-                            0
-                        ],
-                        "vae": [
-                            "4",
-                            2
-                        ]
-                    },
-                    "class_type": "VAEDecode",
-                    "_meta": {
-                        "title": "VAE Decode"
-                    }
-                },
-                "9": {
-                    "inputs": {
-                        "filename_prefix": "ComfyUI",
-                        "images": [
-                            "8",
-                            0
-                        ]
-                    },
-                    "class_type": "SaveImage",
-                    "_meta": {
-                        "title": "Save Image"
-                    }
-                }
-            },
-            {},
-            [
-                "9"
-            ]
-        ],
-        "outputs": {},
-        "status": {
-            "status_str": "success",
-            "completed": true,
-            "messages": [
-                [
-                    "execution_start",
-                    {
-                        "prompt_id": "68c7fe9a-1678-48e5-9216-9929f124f77c",
-                        "timestamp": 1762094386449
-                    }
-                ],
-                [
-                    "execution_cached",
-                    {
-                        "nodes": [
-                            "3",
-                            "4",
-                            "5",
-                            "6",
-                            "7",
-                            "8",
-                            "9"
-                        ],
-                        "prompt_id": "68c7fe9a-1678-48e5-9216-9929f124f77c",
-                        "timestamp": 1762094386450
-                    }
-                ],
-                [
-                    "execution_success",
-                    {
-                        "prompt_id": "68c7fe9a-1678-48e5-9216-9929f124f77c",
-                        "timestamp": 1762094386450
-                    }
-                ]
-            ]
-        },
-        "meta": {}
-    },
-    "b48d8e1e-22b2-4a9c-aea5-39aaab9e6394": {
-        "prompt": [
-            7,
-            "b48d8e1e-22b2-4a9c-aea5-39aaab9e6394",
-            {
-                "3": {
-                    "inputs": {
-                        "seed": 534368940833781,
-                        "steps": 20,
-                        "cfg": 8,
-                        "sampler_name": "euler",
-                        "scheduler": "normal",
-                        "denoise": 1,
-                        "model": [
-                            "4",
-                            0
-                        ],
-                        "positive": [
-                            "6",
-                            0
-                        ],
-                        "negative": [
-                            "7",
-                            0
-                        ],
-                        "latent_image": [
-                            "5",
-                            0
-                        ]
-                    },
-                    "class_type": "KSampler",
-                    "_meta": {
-                        "title": "KSampler"
-                    }
-                },
-                "4": {
-                    "inputs": {
-                        "ckpt_name": "v1-5-pruned-emaonly-fp16.safetensors"
-                    },
-                    "class_type": "CheckpointLoaderSimple",
-                    "_meta": {
-                        "title": "Load Checkpoint"
-                    }
-                },
-                "5": {
-                    "inputs": {
-                        "width": 512,
-                        "height": 512,
-                        "batch_size": 1
-                    },
-                    "class_type": "EmptyLatentImage",
-                    "_meta": {
-                        "title": "Empty Latent Image"
-                    }
-                },
-                "6": {
-                    "inputs": {
-                        "text": "beautiful scenery nature glass bottle landscape, , purple galaxy bottle,",
-                        "clip": [
-                            "4",
-                            1
-                        ]
-                    },
-                    "class_type": "CLIPTextEncode",
-                    "_meta": {
-                        "title": "CLIP Text Encode (Prompt)"
-                    }
-                },
-                "7": {
-                    "inputs": {
-                        "text": "text, watermark",
-                        "clip": [
-                            "4",
-                            1
-                        ]
-                    },
-                    "class_type": "CLIPTextEncode",
-                    "_meta": {
-                        "title": "CLIP Text Encode (Prompt)"
-                    }
-                },
-                "8": {
-                    "inputs": {
-                        "samples": [
-                            "3",
-                            0
-                        ],
-                        "vae": [
-                            "4",
-                            2
-                        ]
-                    },
-                    "class_type": "VAEDecode",
-                    "_meta": {
-                        "title": "VAE Decode"
-                    }
-                },
-                "9": {
-                    "inputs": {
-                        "filename_prefix": "ComfyUI",
-                        "images": [
-                            "8",
-                            0
-                        ]
-                    },
-                    "class_type": "SaveImage",
-                    "_meta": {
-                        "title": "Save Image"
-                    }
-                }
-            },
-            {},
-            [
-                "9"
-            ]
-        ],
-        "outputs": {},
-        "status": {
-            "status_str": "success",
-            "completed": true,
-            "messages": [
-                [
-                    "execution_start",
-                    {
-                        "prompt_id": "b48d8e1e-22b2-4a9c-aea5-39aaab9e6394",
-                        "timestamp": 1762094393756
-                    }
-                ],
-                [
-                    "execution_cached",
-                    {
-                        "nodes": [
-                            "3",
-                            "4",
-                            "5",
-                            "6",
-                            "7",
-                            "8",
-                            "9"
-                        ],
-                        "prompt_id": "b48d8e1e-22b2-4a9c-aea5-39aaab9e6394",
-                        "timestamp": 1762094393758
-                    }
-                ],
-                [
-                    "execution_success",
-                    {
-                        "prompt_id": "b48d8e1e-22b2-4a9c-aea5-39aaab9e6394",
-                        "timestamp": 1762094393758
-                    }
-                ]
-            ]
-        },
-        "meta": {}
-    },
-    "2988ea0c-4789-4e94-a0ca-80c06790cb1f": {
-        "prompt": [
-            8,
-            "2988ea0c-4789-4e94-a0ca-80c06790cb1f",
-            {
-                "3": {
-                    "inputs": {
-                        "seed": 534368940833781,
-                        "steps": 20,
-                        "cfg": 8,
-                        "sampler_name": "euler",
-                        "scheduler": "normal",
-                        "denoise": 1,
-                        "model": [
-                            "4",
-                            0
-                        ],
-                        "positive": [
-                            "6",
-                            0
-                        ],
-                        "negative": [
-                            "7",
-                            0
-                        ],
-                        "latent_image": [
-                            "5",
-                            0
-                        ]
-                    },
-                    "class_type": "KSampler",
-                    "_meta": {
-                        "title": "KSampler"
-                    }
-                },
-                "4": {
-                    "inputs": {
-                        "ckpt_name": "v1-5-pruned-emaonly-fp16.safetensors"
-                    },
-                    "class_type": "CheckpointLoaderSimple",
-                    "_meta": {
-                        "title": "Load Checkpoint"
-                    }
-                },
-                "5": {
-                    "inputs": {
-                        "width": 512,
-                        "height": 512,
-                        "batch_size": 1
-                    },
-                    "class_type": "EmptyLatentImage",
-                    "_meta": {
-                        "title": "Empty Latent Image"
-                    }
-                },
-                "6": {
-                    "inputs": {
-                        "text": "beautiful scenery nature glass bottle landscape, , purple galaxy bottle,",
-                        "clip": [
-                            "4",
-                            1
-                        ]
-                    },
-                    "class_type": "CLIPTextEncode",
-                    "_meta": {
-                        "title": "CLIP Text Encode (Prompt)"
-                    }
-                },
-                "7": {
-                    "inputs": {
-                        "text": "text, watermark",
-                        "clip": [
-                            "4",
-                            1
-                        ]
-                    },
-                    "class_type": "CLIPTextEncode",
-                    "_meta": {
-                        "title": "CLIP Text Encode (Prompt)"
-                    }
-                },
-                "8": {
-                    "inputs": {
-                        "samples": [
-                            "3",
-                            0
-                        ],
-                        "vae": [
-                            "4",
-                            2
-                        ]
-                    },
-                    "class_type": "VAEDecode",
-                    "_meta": {
-                        "title": "VAE Decode"
-                    }
-                },
-                "9": {
-                    "inputs": {
-                        "filename_prefix": "ComfyUI",
-                        "images": [
-                            "8",
-                            0
-                        ]
-                    },
-                    "class_type": "SaveImage",
-                    "_meta": {
-                        "title": "Save Image"
-                    }
-                }
-            },
-            {},
-            [
-                "9"
-            ]
-        ],
-        "outputs": {},
-        "status": {
-            "status_str": "success",
-            "completed": true,
-            "messages": [
-                [
-                    "execution_start",
-                    {
-                        "prompt_id": "2988ea0c-4789-4e94-a0ca-80c06790cb1f",
-                        "timestamp": 1762105609413
-                    }
-                ],
-                [
-                    "execution_cached",
-                    {
-                        "nodes": [
-                            "3",
-                            "4",
-                            "5",
-                            "6",
-                            "7",
-                            "8",
-                            "9"
-                        ],
-                        "prompt_id": "2988ea0c-4789-4e94-a0ca-80c06790cb1f",
-                        "timestamp": 1762105609418
-                    }
-                ],
-                [
-                    "execution_success",
-                    {
-                        "prompt_id": "2988ea0c-4789-4e94-a0ca-80c06790cb1f",
-                        "timestamp": 1762105609420
-                    }
-                ]
-            ]
-        },
-        "meta": {}
-    },
-    "55882c10-64ea-4d54-86a5-bab7e9d88aa9": {
-        "prompt": [
-            9,
-            "55882c10-64ea-4d54-86a5-bab7e9d88aa9",
-            {
-                "3": {
-                    "inputs": {
-                        "seed": 534368940833781,
-                        "steps": 20,
-                        "cfg": 8,
-                        "sampler_name": "euler",
-                        "scheduler": "normal",
-                        "denoise": 1,
-                        "model": [
-                            "4",
-                            0
-                        ],
-                        "positive": [
-                            "6",
-                            0
-                        ],
-                        "negative": [
-                            "7",
-                            0
-                        ],
-                        "latent_image": [
-                            "5",
-                            0
-                        ]
-                    },
-                    "class_type": "KSampler",
-                    "_meta": {
-                        "title": "KSampler"
-                    }
-                },
-                "4": {
-                    "inputs": {
-                        "ckpt_name": "v1-5-pruned-emaonly-fp16.safetensors"
-                    },
-                    "class_type": "CheckpointLoaderSimple",
-                    "_meta": {
-                        "title": "Load Checkpoint"
-                    }
-                },
-                "5": {
-                    "inputs": {
-                        "width": 512,
-                        "height": 512,
-                        "batch_size": 1
-                    },
-                    "class_type": "EmptyLatentImage",
-                    "_meta": {
-                        "title": "Empty Latent Image"
-                    }
-                },
-                "6": {
-                    "inputs": {
-                        "text": "beautiful scenery nature glass bottle landscape, , purple galaxy bottle,",
-                        "clip": [
-                            "4",
-                            1
-                        ]
-                    },
-                    "class_type": "CLIPTextEncode",
-                    "_meta": {
-                        "title": "CLIP Text Encode (Prompt)"
-                    }
-                },
-                "7": {
-                    "inputs": {
-                        "text": "text, watermark",
-                        "clip": [
-                            "4",
-                            1
-                        ]
-                    },
-                    "class_type": "CLIPTextEncode",
-                    "_meta": {
-                        "title": "CLIP Text Encode (Prompt)"
-                    }
-                },
-                "8": {
-                    "inputs": {
-                        "samples": [
-                            "3",
-                            0
-                        ],
-                        "vae": [
-                            "4",
-                            2
-                        ]
-                    },
-                    "class_type": "VAEDecode",
-                    "_meta": {
-                        "title": "VAE Decode"
-                    }
-                },
-                "9": {
-                    "inputs": {
-                        "filename_prefix": "ComfyUI",
-                        "images": [
-                            "8",
-                            0
-                        ]
-                    },
-                    "class_type": "SaveImage",
-                    "_meta": {
-                        "title": "Save Image"
-                    }
-                }
-            },
-            {},
-            [
-                "9"
-            ]
-        ],
-        "outputs": {},
-        "status": {
-            "status_str": "success",
-            "completed": true,
-            "messages": [
-                [
-                    "execution_start",
-                    {
-                        "prompt_id": "55882c10-64ea-4d54-86a5-bab7e9d88aa9",
-                        "timestamp": 1762105626949
-                    }
-                ],
-                [
-                    "execution_cached",
-                    {
-                        "nodes": [
-                            "3",
-                            "4",
-                            "5",
-                            "6",
-                            "7",
-                            "8",
-                            "9"
-                        ],
-                        "prompt_id": "55882c10-64ea-4d54-86a5-bab7e9d88aa9",
-                        "timestamp": 1762105626950
-                    }
-                ],
-                [
-                    "execution_success",
-                    {
-                        "prompt_id": "55882c10-64ea-4d54-86a5-bab7e9d88aa9",
-                        "timestamp": 1762105626950
-                    }
-                ]
-            ]
-        },
-        "meta": {}
-    },
-    "796c9b05-b892-44fd-9b44-f24c19a9b89f": {
-        "prompt": [
-            10,
-            "796c9b05-b892-44fd-9b44-f24c19a9b89f",
-            {
-                "3": {
-                    "inputs": {
-                        "seed": 534368940833781,
-                        "steps": 20,
-                        "cfg": 8,
-                        "sampler_name": "euler",
-                        "scheduler": "normal",
-                        "denoise": 1,
-                        "model": [
-                            "4",
-                            0
-                        ],
-                        "positive": [
-                            "6",
-                            0
-                        ],
-                        "negative": [
-                            "7",
-                            0
-                        ],
-                        "latent_image": [
-                            "5",
-                            0
-                        ]
-                    },
-                    "class_type": "KSampler",
-                    "_meta": {
-                        "title": "KSampler"
-                    }
-                },
-                "4": {
-                    "inputs": {
-                        "ckpt_name": "v1-5-pruned-emaonly-fp16.safetensors"
-                    },
-                    "class_type": "CheckpointLoaderSimple",
-                    "_meta": {
-                        "title": "Load Checkpoint"
-                    }
-                },
-                "5": {
-                    "inputs": {
-                        "width": 512,
-                        "height": 512,
-                        "batch_size": 1
-                    },
-                    "class_type": "EmptyLatentImage",
-                    "_meta": {
-                        "title": "Empty Latent Image"
-                    }
-                },
-                "6": {
-                    "inputs": {
-                        "text": "beautiful scenery nature glass bottle landscape, , purple galaxy bottle,",
-                        "clip": [
-                            "4",
-                            1
-                        ]
-                    },
-                    "class_type": "CLIPTextEncode",
-                    "_meta": {
-                        "title": "CLIP Text Encode (Prompt)"
-                    }
-                },
-                "7": {
-                    "inputs": {
-                        "text": "text, watermark",
-                        "clip": [
-                            "4",
-                            1
-                        ]
-                    },
-                    "class_type": "CLIPTextEncode",
-                    "_meta": {
-                        "title": "CLIP Text Encode (Prompt)"
-                    }
-                },
-                "8": {
-                    "inputs": {
-                        "samples": [
-                            "3",
-                            0
-                        ],
-                        "vae": [
-                            "4",
-                            2
-                        ]
-                    },
-                    "class_type": "VAEDecode",
-                    "_meta": {
-                        "title": "VAE Decode"
-                    }
-                },
-                "9": {
-                    "inputs": {
-                        "filename_prefix": "ComfyUI",
-                        "images": [
-                            "8",
-                            0
-                        ]
-                    },
-                    "class_type": "SaveImage",
-                    "_meta": {
-                        "title": "Save Image"
-                    }
-                }
-            },
-            {},
-            [
-                "9"
-            ]
-        ],
-        "outputs": {},
-        "status": {
-            "status_str": "success",
-            "completed": true,
-            "messages": [
-                [
-                    "execution_start",
-                    {
-                        "prompt_id": "796c9b05-b892-44fd-9b44-f24c19a9b89f",
-                        "timestamp": 1762105656067
-                    }
-                ],
-                [
-                    "execution_cached",
-                    {
-                        "nodes": [
-                            "3",
-                            "4",
-                            "5",
-                            "6",
-                            "7",
-                            "8",
-                            "9"
-                        ],
-                        "prompt_id": "796c9b05-b892-44fd-9b44-f24c19a9b89f",
-                        "timestamp": 1762105656069
-                    }
-                ],
-                [
-                    "execution_success",
-                    {
-                        "prompt_id": "796c9b05-b892-44fd-9b44-f24c19a9b89f",
-                        "timestamp": 1762105656069
-                    }
-                ]
-            ]
-        },
-        "meta": {}
-    },
-    "b4a44e27-e00b-49e8-bea3-a7ffa1ea32b2": {
-        "prompt": [
-            11,
-            "b4a44e27-e00b-49e8-bea3-a7ffa1ea32b2",
-            {
-                "3": {
-                    "inputs": {
-                        "seed": 534368940833781,
-                        "steps": 20,
-                        "cfg": 8,
-                        "sampler_name": "euler",
-                        "scheduler": "normal",
-                        "denoise": 1,
-                        "model": [
-                            "4",
-                            0
-                        ],
-                        "positive": [
-                            "6",
-                            0
-                        ],
-                        "negative": [
-                            "7",
-                            0
-                        ],
-                        "latent_image": [
-                            "5",
-                            0
-                        ]
-                    },
-                    "class_type": "KSampler",
-                    "_meta": {
-                        "title": "KSampler"
-                    }
-                },
-                "4": {
-                    "inputs": {
-                        "ckpt_name": "v1-5-pruned-emaonly-fp16.safetensors"
-                    },
-                    "class_type": "CheckpointLoaderSimple",
-                    "_meta": {
-                        "title": "Load Checkpoint"
-                    }
-                },
-                "5": {
-                    "inputs": {
-                        "width": 512,
-                        "height": 512,
-                        "batch_size": 1
-                    },
-                    "class_type": "EmptyLatentImage",
-                    "_meta": {
-                        "title": "Empty Latent Image"
-                    }
-                },
-                "6": {
-                    "inputs": {
-                        "text": "beautiful scenery nature glass bottle landscape, , purple galaxy bottle,",
-                        "clip": [
-                            "4",
-                            1
-                        ]
-                    },
-                    "class_type": "CLIPTextEncode",
-                    "_meta": {
-                        "title": "CLIP Text Encode (Prompt)"
-                    }
-                },
-                "7": {
-                    "inputs": {
-                        "text": "text, watermark",
-                        "clip": [
-                            "4",
-                            1
-                        ]
-                    },
-                    "class_type": "CLIPTextEncode",
-                    "_meta": {
-                        "title": "CLIP Text Encode (Prompt)"
-                    }
-                },
-                "8": {
-                    "inputs": {
-                        "samples": [
-                            "3",
-                            0
-                        ],
-                        "vae": [
-                            "4",
-                            2
-                        ]
-                    },
-                    "class_type": "VAEDecode",
-                    "_meta": {
-                        "title": "VAE Decode"
-                    }
-                },
-                "9": {
-                    "inputs": {
-                        "filename_prefix": "ComfyUI",
-                        "images": [
-                            "8",
-                            0
-                        ]
-                    },
-                    "class_type": "SaveImage",
-                    "_meta": {
-                        "title": "Save Image"
-                    }
-                }
-            },
-            {},
-            [
-                "9"
-            ]
-        ],
-        "outputs": {},
-        "status": {
-            "status_str": "success",
-            "completed": true,
-            "messages": [
-                [
-                    "execution_start",
-                    {
-                        "prompt_id": "b4a44e27-e00b-49e8-bea3-a7ffa1ea32b2",
-                        "timestamp": 1762105698721
-                    }
-                ],
-                [
-                    "execution_cached",
-                    {
-                        "nodes": [
-                            "3",
-                            "4",
-                            "5",
-                            "6",
-                            "7",
-                            "8",
-                            "9"
-                        ],
-                        "prompt_id": "b4a44e27-e00b-49e8-bea3-a7ffa1ea32b2",
-                        "timestamp": 1762105698722
-                    }
-                ],
-                [
-                    "execution_success",
-                    {
-                        "prompt_id": "b4a44e27-e00b-49e8-bea3-a7ffa1ea32b2",
-                        "timestamp": 1762105698723
-                    }
-                ]
-            ]
-        },
-        "meta": {}
     }
 }

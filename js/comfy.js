@@ -1,6 +1,6 @@
 window.onload = function()
 {
-    $.getJSON('config/config.json', onConfigDataDidLoad).fail(function() {
+    $.getJSON('config/comfy-config.json', onConfigDataDidLoad).fail(function() {
         log('Error parsing admin.config.json');
     });
 
@@ -11,15 +11,6 @@ window.onload = function()
 function onConfigDataDidLoad(data)
 {
     window.config = data;
-
-    for (const workflow of window.config.workflows)
-    {
-        $.getJSON(workflow.url).done(function(workflowData) {
-            workflow.data = workflowData;
-        }).fail(function() {
-            console.log('Error loading workflow from: ' + workflow.url);
-        });
-    }
 
     // Wait for all workflows to load before initializing ComfyUI
     const workflowPromises = window.config.workflows.map(workflow => 
@@ -61,13 +52,13 @@ function onWorkflowButtonClick(workflow)
 {
     log('Starting workflow: ' + workflow.name);
     window.currentWorkflow = workflow;
-    if (workflow.type == 'cameraInput')
+    if (workflow.inputType == WORKFLOW_INPUT_TYPE.CAMERA)
     {
-        startCameraCapture(workflow);
+        startCameraCapture();
     }
     else
     {
-        ComfyUIManager.startWorkflow(workflow);
+        ComfyUIManager.startWorkflow(workflow, onWorkflowComplete);
     }
 }
 
@@ -83,7 +74,7 @@ function startCameraCapture()
     });
 }
 
-function onCameraCaptureButtonClick(workflow)
+function onCameraCaptureButtonClick()
 {
     const canvas = document.getElementById('camera-canvas');
     const context = canvas.getContext('2d');
@@ -101,14 +92,14 @@ function onCameraCaptureScrimClick()
     $('#camera-capture').removeClass('show');
 }
 
-function onComfyUIImageUploaded(data, filename)
+function onComfyUIImageUploaded(data)
 {
     log('Image uploaded: ', data);
     const workflow = window.currentWorkflow;
-    if (workflow && workflow.type == 'cameraInput')
+    if (workflow?.inputType == WORKFLOW_INPUT_TYPE.CAMERA)
     {
-        workflow.data[workflow.imageInputNodeId].inputs.image = filename;
-        ComfyUIManager.startWorkflow(workflow);
+        workflow.data[workflow.imageInputNodeId].inputs.image = data.name;
+        ComfyUIManager.startWorkflow(workflow, onWorkflowComplete);
         const stream = $('#camera-video')[0].srcObject;
         if (stream)
         {
@@ -118,14 +109,32 @@ function onComfyUIImageUploaded(data, filename)
     }
 }
 
+function onWorkflowComplete(historyData)
+{
+    log('Workflow complete');
+    // data[ComfyUIManager.currentPromptId]
+    ComfyUIManager.showOutput(historyData);
+}
+
+// Override console.log to capture all logs
+(function() {
+    const originalConsoleLog = console.log;
+    console.log = function(message, omitTimestamp = false) {
+        // Call original console.log
+        originalConsoleLog.apply(console, [message]);
+        
+        // Add to log textarea
+        if (!omitTimestamp) {
+            $('#log')[0].value += moment().format('MMM-DD-YYYY HH:mm:ss') + ' - ';
+        }
+        $('#log')[0].value += message + '\n';
+        $('#log')[0].scrollTop = $('#log')[0].scrollHeight;
+    };
+})();
+
 function log(message, omitTimestamp = false)
 {
-    console.log(message);
-    if (!omitTimestamp) {
-        $('#log')[0].value += moment().format('MMM-DD-YYYY HH:mm:ss') + ' - ';
-    }
-    $('#log')[0].value += message + '\n';
-    $('#log')[0].scrollTop = $('#log')[0].scrollHeight;
+    console.log(message, omitTimestamp);
 }
 
 window.onkeydown = function(e)

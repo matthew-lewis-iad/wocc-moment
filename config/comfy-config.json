@@ -1,20 +1,18 @@
 {
-    "poseWorkflows": [
+    "workflows": [
         {
             "inputType": "camera",
             "outputType": "image",
-            "name": "Soccer Player",
+            "name": "Camera to Soccer Images",
             "url": "comfy/workflows/4FanPoses-api.json",
             "imageInputNodeId": "625",
             "saveImageNodeIds": ["874", "875", "896", "474"],
             "totalProgressNodes": 73
-        }
-    ],
-    "sceneWorkflows": [
+        },
         {
             "inputType": "outputImage",
             "outputType": "image",
-            "name": "Day Stadium",
+            "name": "Image to Day Stadium",
             "url": "comfy/workflows/DayStadium-api.json",
             "imageInputNodeId": "109",
             "saveImageNodeIds": ["136"],
@@ -23,11 +21,30 @@
         {
             "inputType": "outputImage",
             "outputType": "image",
-            "name": "Night Stadium",
+            "name": "Image to Night Stadium",
             "url": "comfy/workflows/NightStadium-api.json",
             "imageInputNodeId": "109",
             "saveImageNodeIds": ["136"],
             "totalProgressNodes": 16
         }
-    ]
+    ],
+    "workflows_archive": [
+        {
+            "inputType": "text",
+            "outputType": "image",
+            "name": "Text Prompt to Image",
+            "url": "comfy/workflows/text2img-api.json",
+            "textInputNodeId": "6",
+            "saveImageNodeId": "9"
+        },
+        {
+            "inputType": "camera",
+            "outputType": "image",
+            "name": "Camera to Soccer Images",
+            "url": "comfy/workflows/Qwen_imageEdit2509_SoccerPlayer_Prompts-api.json",
+            "imageInputNodeId": "78",
+            "saveImageNodeId": "60"
+        }
+    ],
+    "outputDirectory": "../ComfyUI/outputs"
 }
