@@ -14,7 +14,7 @@
   },
   "625": {
     "inputs": {
-      "image": "20251113_220318.png"
+      "image": "istockphoto-1304711573-612x612_sq.jpg"
     },
     "class_type": "LoadImage",
     "_meta": {
@@ -78,7 +78,7 @@
   },
   "836": {
     "inputs": {
-      "lora_name": "Qwen-Image-Edit-2509-Lightning-4steps-V1.0-bf16.safetensors",
+      "lora_name": "face_swap_5500_qwen_image_edit_2509_v1.safetensors",
       "strength_model": 1,
       "model": [
         "837",
@@ -145,7 +145,7 @@
   },
   "840": {
     "inputs": {
-      "image": "latin-woman-celebrating.jpg"
+      "image": "happy-pretty-young-asian-woman-260nw-2220491887.webp"
     },
     "class_type": "LoadImage",
     "_meta": {
@@ -278,7 +278,6 @@
     "inputs": {
       "upscale_method": "lanczos",
       "megapixels": 2,
-      "resolution_steps": 1,
       "image": [
         "846",
         0
@@ -309,7 +308,7 @@
   },
   "849": {
     "inputs": {
-      "image": "soccer-kit.jpg"
+      "image": "ComfyUI_00205_.png"
     },
     "class_type": "LoadImage",
     "_meta": {
@@ -320,7 +319,6 @@
     "inputs": {
       "upscale_method": "lanczos",
       "megapixels": 1,
-      "resolution_steps": 1,
       "image": [
         "625",
         0
@@ -406,7 +404,7 @@
   },
   "857": {
     "inputs": {
-      "lora_name": "Qwen-Image-Edit-2509-Lightning-4steps-V1.0-bf16.safetensors",
+      "lora_name": "face_swap_5500_qwen_image_edit_2509_v1.safetensors",
       "strength_model": 1,
       "model": [
         "858",
@@ -475,7 +473,6 @@
     "inputs": {
       "upscale_method": "lanczos",
       "megapixels": 1,
-      "resolution_steps": 1,
       "image": [
         "625",
         0
@@ -488,7 +485,7 @@
   },
   "862": {
     "inputs": {
-      "image": "asian-woman-cheering.jpg"
+      "image": "young-beautiful-latin-happy-euphoric-and-excited-woman-celebrating-winning-the-lottery-positive-human-facial-expressions-and-emotions-people-success-MTFJ1K.jpg"
     },
     "class_type": "LoadImage",
     "_meta": {
@@ -603,7 +600,7 @@
   },
   "868": {
     "inputs": {
-      "image": "soccer-kit.jpg"
+      "image": "ComfyUI_00205_.png"
     },
     "class_type": "LoadImage",
     "_meta": {
@@ -630,7 +627,6 @@
     "inputs": {
       "upscale_method": "lanczos",
       "megapixels": 2,
-      "resolution_steps": 1,
       "image": [
         "869",
         0
@@ -885,7 +881,6 @@
     "inputs": {
       "upscale_method": "lanczos",
       "megapixels": 2,
-      "resolution_steps": 1,
       "image": [
         "893",
         0
@@ -898,7 +893,7 @@
   },
   "890": {
     "inputs": {
-      "image": "soccer-kit.jpg"
+      "image": "ComfyUI_00205_.png"
     },
     "class_type": "LoadImage",
     "_meta": {
@@ -909,7 +904,6 @@
     "inputs": {
       "upscale_method": "lanczos",
       "megapixels": 1,
-      "resolution_steps": 1,
       "image": [
         "625",
         0
@@ -922,7 +916,7 @@
   },
   "892": {
     "inputs": {
-      "lora_name": "Qwen-Image-Edit-2509-Lightning-4steps-V1.0-bf16.safetensors",
+      "lora_name": "face_swap_5500_qwen_image_edit_2509_v1.safetensors",
       "strength_model": 1,
       "model": [
         "881",
@@ -952,7 +946,7 @@
   },
   "894": {
     "inputs": {
-      "image": "winning-happy-man-2.jpg"
+      "image": "istockphoto-872807566-612x612.jpg"
     },
     "class_type": "LoadImage",
     "_meta": {
@@ -1208,7 +1202,6 @@
     "inputs": {
       "upscale_method": "lanczos",
       "megapixels": 2,
-      "resolution_steps": 1,
       "image": [
         "914",
         0
@@ -1221,7 +1214,7 @@
   },
   "911": {
     "inputs": {
-      "image": "soccer-kit.jpg"
+      "image": "ComfyUI_00205_.png"
     },
     "class_type": "LoadImage",
     "_meta": {
@@ -1232,7 +1225,6 @@
     "inputs": {
       "upscale_method": "lanczos",
       "megapixels": 1,
-      "resolution_steps": 1,
       "image": [
         "625",
         0
@@ -1245,7 +1237,7 @@
   },
   "913": {
     "inputs": {
-      "lora_name": "Qwen-Image-Edit-2509-Lightning-4steps-V1.0-bf16.safetensors",
+      "lora_name": "face_swap_5500_qwen_image_edit_2509_v1.safetensors",
       "strength_model": 1,
       "model": [
         "902",
@@ -1275,7 +1267,7 @@
   },
   "915": {
     "inputs": {
-      "image": "winning-happy-man-1.jpg"
+      "image": "won-winning-success-happy-man-260nw-1288006330.webp"
     },
     "class_type": "LoadImage",
     "_meta": {
