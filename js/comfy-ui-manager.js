@@ -35,6 +35,7 @@ const ComfyUIManager = {
             }
             else if (eventData.type == 'progress_state')
             {
+                // if (data.nodes[output nodeId].state == 'finished') 
                 console.log('ComfyUIManager : progress_state');
                 const totalNodes = ComfyUIManager.currentWorkflow.totalProgressNodes ?? Object.keys(ComfyUIManager.currentWorkflow.data).length;
                 let finishedNodes = 0;
