@@ -278,6 +278,7 @@
     "inputs": {
       "upscale_method": "lanczos",
       "megapixels": 2,
+      "resolution_steps": 1,
       "image": [
         "846",
         0
@@ -319,6 +320,7 @@
     "inputs": {
       "upscale_method": "lanczos",
       "megapixels": 1,
+      "resolution_steps": 1,
       "image": [
         "625",
         0
@@ -473,6 +475,7 @@
     "inputs": {
       "upscale_method": "lanczos",
       "megapixels": 1,
+      "resolution_steps": 1,
       "image": [
         "625",
         0
@@ -627,6 +630,7 @@
     "inputs": {
       "upscale_method": "lanczos",
       "megapixels": 2,
+      "resolution_steps": 1,
       "image": [
         "869",
         0
@@ -881,6 +885,7 @@
     "inputs": {
       "upscale_method": "lanczos",
       "megapixels": 2,
+      "resolution_steps": 1,
       "image": [
         "893",
         0
@@ -904,6 +909,7 @@
     "inputs": {
       "upscale_method": "lanczos",
       "megapixels": 1,
+      "resolution_steps": 1,
       "image": [
         "625",
         0
@@ -1202,6 +1208,7 @@
     "inputs": {
       "upscale_method": "lanczos",
       "megapixels": 2,
+      "resolution_steps": 1,
       "image": [
         "914",
         0
@@ -1225,6 +1232,7 @@
     "inputs": {
       "upscale_method": "lanczos",
       "megapixels": 1,
+      "resolution_steps": 1,
       "image": [
         "625",
         0
