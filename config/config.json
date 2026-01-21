@@ -1,4 +1,6 @@
 {
+    "comfyApiWebsocketHost": "ws://10.0.0.154:8188",
+    "comfyApiHost": "http://10.0.0.154:8188",
     "poseWorkflows": [
         {
             "inputType": "camera",

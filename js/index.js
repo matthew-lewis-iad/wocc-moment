@@ -29,7 +29,7 @@ function onConfigDataDidLoad(data)
 function init()
 {
     console.log('Workflows loaded. Initializing ComfyUI Manager...');
-    ComfyUIManager.init(window);
+    ComfyUIManager.init(window, window.config.comfyApiWebsocketHost, window.config.comfyApiHost);
 
     $('#idle-view').on('click', showCameraCaptureView);
     $('#camera-capture-button').on('click', onCameraCaptureButtonClick);
@@ -150,12 +150,14 @@ function onComfyUIImageUploaded(data)
     window.currentPoseWorkflow = window.config.poseWorkflows[0]; // For now, just use the first pose workflow
     const workflow = window.currentPoseWorkflow;
     workflow.data[workflow.imageInputNodeId].inputs.image = data.name;
-    ComfyUIManager.startWorkflow(workflow, onPoseWorkflowComplete);
+    ComfyUIManager.startWorkflow(workflow, onPoseWorkflowOutputGenerated);
+
+    showPoseSelectView();
 }
 
-function onPoseWorkflowComplete(historyData)
+function onPoseWorkflowOutputGenerated(historyData)
 {
-    console.log('onPoseWorkflowComplete');
+    console.log('onPoseWorkflowOutputGenerated');
     console.dir(historyData);
 
     const saveImageNodeIds = window.currentPoseWorkflow.saveImageNodeIds;
@@ -165,13 +167,24 @@ function onPoseWorkflowComplete(historyData)
         const nodeImages = historyData.outputs?.[nodeId]?.images;
         if (nodeImages && nodeImages.length > 0)
         {
-            for (const img of nodeImages)
-            {
-                const imageUrl = `${ComfyUIManager.apiHostUrl}/view?filename=${img.filename}&subfolder=${img.subfolder}&type=${img.type}`;
-                const outputImg = UI.createImg({src: imageUrl, classes: 'pose-image'});
-                $(outputImg).data('promptInputFilename', `../${img.type}/${img.subfolder}/${img.filename}`);
-                images.push(outputImg);
-            }
+            const imageWrapper = UI.createDiv({classes: 'pose-image-wrapper'});
+            const img = nodeImages[0];
+            const imageUrl = `${ComfyUIManager.apiHostUrl}/view?filename=${img.filename}&subfolder=${img.subfolder}&type=${img.type}`;
+            const outputImg = UI.createImg({src: imageUrl, classes: 'pose-image'});
+            $(outputImg).data('promptInputFilename', `../${img.type}/${img.subfolder}/${img.filename}`);
+            $(imageWrapper).append(outputImg);
+            $(imageWrapper).on('click', function() {
+                onPoseImageSelected(outputImg);
+            });
+            images.push(imageWrapper);
+        }
+        else
+        {
+            // Add a spinning loading indicator if no image is available
+            const loadingDiv = UI.createDiv({classes: 'pose-image-wrapper'});
+            const spinner = UI.createDiv({classes: 'spinner'});
+            loadingDiv.appendChild(spinner);
+            images.push(loadingDiv);
         }
     }
 
@@ -182,14 +195,22 @@ function showPoseSelectView(images)
 {
     console.log('showPoseSelectView');
     $('#pose-select-images').empty();
-    images.forEach((image, index) => {
-        const imageWrapper = UI.createDiv({classes: 'pose-image-wrapper'});
-        $(imageWrapper).append(image);
-        $(imageWrapper).on('click', function() {
-            onPoseImageSelected(image);
-        });
-        $('#pose-select-images').append(imageWrapper);
-    });
+    for (let i=0; i < window.currentPoseWorkflow.saveImageNodeIds.length; i++)
+    {
+        if (!images || i >= images.length)
+        {
+            // Add a spinning loading indicator if no image is available
+            const loadingDiv = UI.createDiv({classes: 'pose-image-wrapper'});
+            const spinner = UI.createDiv({classes: 'spinner'});
+            loadingDiv.appendChild(spinner);
+            $('#pose-select-images').append(loadingDiv);
+        }
+        else
+        {
+            $('#pose-select-images').append(images[i]);
+        }
+    }
+    $('#pose-select-images').toggleClass('disabled', images.length < window.currentPoseWorkflow.saveImageNodeIds.length);    
     $('html')[0].dataset.view = 'pose-select';
 }
 
@@ -226,20 +247,18 @@ function onSceneWorkflowComplete(historyData)
     console.dir(historyData);
 
     const saveImageNodeIds = window.currentSceneWorkflow.saveImageNodeIds;
-    const images = [];
     for (const nodeId of saveImageNodeIds)
     {
         const nodeImages = historyData.outputs?.[nodeId]?.images;
         if (nodeImages && nodeImages.length > 0)
         {
-            images.push(...nodeImages);
+            if (nodeImages.length > 0)
+            {
+                const img = nodeImages[0];
+                const imageUrl = `${ComfyUIManager.apiHostUrl}/view?filename=${img.filename}&subfolder=${img.subfolder}&type=${img.type}`;
+                $('#result-image')[0].src = imageUrl;
+            }
         }
-    }
-    if (images.length > 0)
-    {
-        const img = images[0];
-        const imageUrl = `${ComfyUIManager.apiHostUrl}/view?filename=${img.filename}&subfolder=${img.subfolder}&type=${img.type}`;
-        $('#result-image')[0].src = imageUrl;
     }
 
     showResultView();

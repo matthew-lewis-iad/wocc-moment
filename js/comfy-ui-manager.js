@@ -11,89 +11,132 @@ const WORKFLOW_OUTPUT_TYPE = {
 
 const ComfyUIManager = {
     CLIENT_ID: 'comfy-ui-manager',
-    // websocketHostUrl: 'ws://127.0.0.1:8188',
-    // apiHostUrl: 'http://127.0.0.1:8188',
-    websocketHostUrl: 'ws://10.0.0.154:8188',
-    apiHostUrl: 'http://10.0.0.154:8188',
     socket: null,
-    init: function (delegate)
+    websocketHostUrl: null,
+    apiHostUrl: null,
+    delegate: null,
+    currentPromptId: null,
+    currentWorkflow: null,
+    currentWorkflowCallback: null,
+    lastEvent: null,
+    lastProgressEventData: null,
+    currentEventDataBlobs: null,
+    init: function (delegate, websocketHostUrl, apiHostUrl)
     {
         console.log('ComfyUIManager : init');
         this.delegate = delegate;
+        this.websocketHostUrl = websocketHostUrl;
+        this.apiHostUrl = apiHostUrl;
         this.socket = new WebSocket(`${this.websocketHostUrl}/ws?clientId=${this.CLIENT_ID}`);
 
-        this.socket.onopen = function () {
+        this.socket.onopen = function ()
+        {
             console.log('ComfyUIManager : WebSocket connection established');
         };
         
-        this.socket.onmessage = function (event) {
+        this.socket.onmessage = (event) => {
+            if (event.data instanceof Blob) return; // Ignore binary messages for now
+            
             const eventData = JSON.parse(event.data);
             // console.log('ComfyUIManager : WebSocket message received - ' + eventData.type);
-            if (eventData.type == 'progress')
-            {
+            if (eventData.type == 'progress') {
+                this.lastProgressEventData = eventData;
                 console.log('ComfyUIManager : progress');
+                const saveImageNodeProgressData = {};
+                if (ComfyUIManager.currentWorkflow.outputType == WORKFLOW_OUTPUT_TYPE.IMAGE) {
+                    const saveNodeIds = ComfyUIManager.currentWorkflow.saveImageNodeIds;
+                    for (const nodeId of saveNodeIds) {
+                        if (eventData.data.node == nodeId) {
+                            saveImageNodeProgressData[nodeId] = {
+                                nodeId: eventData.data.node,
+                                value: eventData.data.value,
+                                max: eventData.data.max
+                            };
+                        }
+                    }
+                }
+                if (Object.keys(saveImageNodeProgressData).length > 0) {
+                    console.log('******************************');
+                    console.log('       IMAGE NODE UPDATE      ');
+                    console.log('******************************');
+                    console.dir(saveImageNodeProgressData);
+                } else {
+                    console.dir(eventData);
+                }
             }
-            else if (eventData.type == 'progress_state')
-            {
+            else if (eventData.type == 'progress_state') {
                 // if (data.nodes[output nodeId].state == 'finished') 
                 console.log('ComfyUIManager : progress_state');
                 const totalNodes = ComfyUIManager.currentWorkflow.totalProgressNodes ?? Object.keys(ComfyUIManager.currentWorkflow.data).length;
                 let finishedNodes = 0;
-                for (const nodeId in eventData.data.nodes)
-                {
-                    if (eventData.data.nodes[nodeId].state == 'finished')
-                    {
+                for (const nodeId in eventData.data.nodes) {
+                    if (eventData.data.nodes[nodeId].state == 'finished') {
                         finishedNodes++;
                     }
                 }
                 const progressPercent = Math.floor((finishedNodes / totalNodes) * 100);
                 ComfyUIManager.updateProgress(progressPercent);
-             
-                if (ComfyUIManager.currentWorkflow.outputType == WORKFLOW_OUTPUT_TYPE.IMAGE)
-                {
+            
+                const saveImageNodeProgressData = {};
+                if (ComfyUIManager.currentWorkflow.outputType == WORKFLOW_OUTPUT_TYPE.IMAGE) {
                     const saveNodeIds = ComfyUIManager.currentWorkflow.saveImageNodeIds;
                     let allFinished = true;
-                    for (let i = 0; i < saveNodeIds.length; i++)
-                    {
+                    for (let i = 0; i < saveNodeIds.length; i++) {
                         const nodeId = saveNodeIds[i];
-                        if (eventData.data?.nodes?.[nodeId]?.state != 'finished')
-                        {
+                        if (eventData.data?.nodes?.[nodeId]?.state != 'finished') {
                             allFinished = false;
-                            break;
+                        }
+                        if (eventData.data?.nodes?.[nodeId] !== undefined) {
+                            const nodeProgress = eventData.data.nodes[nodeId];
+                            saveImageNodeProgressData[nodeId] = {
+                                nodeId: nodeProgress.node_id,
+                                state: nodeProgress.state,
+                                value: nodeProgress.value,
+                                max: nodeProgress.max
+                            };
                         }
                     }
-                    if (allFinished)
-                    {
+
+                    if (Object.keys(saveImageNodeProgressData).length > 0) {
+                        console.log('******************************');
+                        console.log('       IMAGE NODE UPDATE      ');
+                        console.log('******************************');
+                        console.dir(saveImageNodeProgressData);
+                    } else {
+                        console.dir(eventData);
+                    }
+                    
+                    if (allFinished) {
                         console.log('ComfyUIManager : Detected workflow finished state for promptId: ' + ComfyUIManager.currentPromptId);
                         ComfyUIManager.getHistory(ComfyUIManager.currentPromptId);
                     }
                 }
-                else
-                {
+                else {
                     console.log('ComfyUIManager : progress_state unhandled');
+                    console.dir(eventData);
                 }
             }
-            else if (eventData.type == 'execution_start')
-            {
+            else if (eventData.type == 'execution_start') {
                 console.log('ComfyUIManager : execution_start');
+                console.dir(eventData);
             }
-            else if (eventData.type == 'execution_cached')
-            {
+            else if (eventData.type == 'execution_cached') {
                 console.log('ComfyUIManager : execution_cached');
+                console.dir(eventData);
             }
-            else if (eventData.type == 'executing')
-            {
+            else if (eventData.type == 'executing') {
                 console.log('ComfyUIManager : executing');
+                console.dir(eventData);
             }
-            else if (eventData.type == 'executed')
-            {
+            else if (eventData.type == 'executed') {
                 console.log('ComfyUIManager : executed');
+                console.dir(eventData);
             }
-            else if (eventData.type == 'execution_error')
-            {
+            else if (eventData.type == 'execution_error') {
                 console.log('ComfyUIManager : execution_error');
+                console.dir(eventData);
             }
-            console.dir(eventData);
+            this.lastEvent = event;
         };
         
         this.socket.onclose = function () {
