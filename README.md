@@ -2,6 +2,7 @@
 
 ## Installation
 
+- Install CUDA 12.8
 Reference the [Github repo](https://github.com/comfyanonymous/ComfyUI)  
 - Install python 3.12 https://www.python.org/downloads/   
 - Run `git clone https://github.com/comfyanonymous/ComfyUI.git` to clone the public repo
@@ -11,6 +12,13 @@ Reference the [Github repo](https://github.com/comfyanonymous/ComfyUI)
 - Install dependencies `pip install -r requirements.txt`
 - Install pytorch `pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121`
 - If you get the error "Torch not compiled with CUDA" uninstall via `pip uninstall torch torchvision torchaudio` and reinstall with the command above
+Portable version
+- Download [ComfyUI Portable](https://docs.comfy.org/installation/comfyui_portable_windows)
+- Extract to c:\
+- Ensure Python is not installed on the Windows system
+- Navigate to C:\ComfyUI_windows_portable_nvidia\ComfyUI_windows_portable\python_embedded
+- Run `.\python.exe -m pip uninstall torch torchvision torchaudio`
+- Run `.\python.exe -m pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu128`
 
 ## Running
 - Activate python virtual environment `.\.venv\Scripts\activate`
