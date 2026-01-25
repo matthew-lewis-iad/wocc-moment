@@ -1,12 +1,12 @@
 {
-    "comfyApiWebsocketHost": "ws://10.0.0.154:8188",
-    "comfyApiHost": "http://10.0.0.154:8188",
+    "comfyApiWebsocketHost": "ws://10.0.0.74:8188",
+    "comfyApiHost": "http://10.0.0.74:8188",
     "poseWorkflows": [
         {
             "inputType": "camera",
             "outputType": "image",
             "name": "Soccer Player",
-            "url": "comfy/workflows/4FanPoses-api.json",
+            "url": "comfy/workflows/4FanPoses-api-portable.json",
             "imageInputNodeId": "625",
             "saveImageNodeIds": ["874", "875", "896", "474"],
             "totalProgressNodes": 73

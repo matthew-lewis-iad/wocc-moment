@@ -138,6 +138,10 @@ const ComfyUIManager = {
             }
             this.lastEvent = event;
         };
+
+        this.socket.onerror = function (error) {
+            console.log('ComfyUIManager : WebSocket error - ' + JSON.stringify(error));
+        }
         
         this.socket.onclose = function () {
             console.log('ComfyUIManager : WebSocket connection closed');

@@ -1,7 +1,20 @@
 var cameraCanvas, cameraContext;
+var logitechCameraId, USE_LOGITECH=true;
 
 window.onload = function()
 {
+    navigator.mediaDevices.enumerateDevices().then((devices) => {
+        console.log('enumerateDevices:');
+        console.dir(devices);
+        for (let d=0; d < devices.length; d++)
+        {
+            if (devices[d].label.indexOf('Logitech') != -1)
+            {
+                logitechCameraId = devices[d].deviceId;
+            }
+        }
+    });
+
     $.getJSON('config/config.json', onConfigDataDidLoad).fail(function() {
         log('Error parsing admin.config.json');
     });
@@ -67,7 +80,26 @@ function showCameraCaptureView()
 function startCameraCapture()
 {
     console.log('startCameraCapture');
-    navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
+    const options = {
+        audio: false,
+        video: {
+            // width: 3840,
+            // height: 2160,
+            width: 1920,
+            height: 1080,
+            facingMode: {
+                ideal: 'user'
+            }
+        }
+    };
+    if (USE_LOGITECH && logitechCameraId)
+    {
+        // options.video.width = 3840;
+        // options.video.height = 2160;
+        options.video.deviceId = { exact: logitechCameraId };
+        options.video.resizeMode = 'none';
+    }
+    navigator.mediaDevices.getUserMedia(options)
     .then(function(stream) {
         $('#camera-video')[0].srcObject = stream;
     })
@@ -150,6 +182,7 @@ function onComfyUIImageUploaded(data)
     window.currentPoseWorkflow = window.config.poseWorkflows[0]; // For now, just use the first pose workflow
     const workflow = window.currentPoseWorkflow;
     workflow.data[workflow.imageInputNodeId].inputs.image = data.name;
+    window.poseWorkflowStartTime = Date.now();
     ComfyUIManager.startWorkflow(workflow, onPoseWorkflowOutputGenerated);
 
     showPoseSelectView();
@@ -159,6 +192,8 @@ function onPoseWorkflowOutputGenerated(historyData)
 {
     console.log('onPoseWorkflowOutputGenerated');
     console.dir(historyData);
+    const elapsedTime = (Date.now() - window.poseWorkflowStartTime) / 1000.0;
+    console.log('Pose workflow elapsed time: ' + elapsedTime.toFixed(2) + ' seconds');
 
     const saveImageNodeIds = window.currentPoseWorkflow.saveImageNodeIds;
     const images = [];
@@ -238,6 +273,7 @@ function onSceneSelectButtonClick(event)
     workflow.data[workflow.imageInputNodeId].inputs.image = $(window.currentPoseImage).data('promptInputFilename');
 
     showProgressView();
+    window.sceneWorkflowStartTime = Date.now();
     ComfyUIManager.startWorkflow(workflow, onSceneWorkflowComplete);
 }
 
@@ -245,6 +281,9 @@ function onSceneWorkflowComplete(historyData)
 {
     console.log('onSceneWorkflowComplete');
     console.dir(historyData);
+
+    const elapsedTime = (Date.now() - window.sceneWorkflowStartTime) / 1000.0;
+    console.log('Scene workflow elapsed time: ' + elapsedTime.toFixed(2) + ' seconds');
 
     const saveImageNodeIds = window.currentSceneWorkflow.saveImageNodeIds;
     for (const nodeId of saveImageNodeIds)
