@@ -1,0 +1,2 @@
+cd c:\ComfyUI_windows_portable
+.\python_embeded\python.exe .\ComfyUI\main.py --listen 0.0.0.0 --port 8188 --enable-cors-header * --front-end-version Comfy-Org/ComfyUI_frontend@latest --preview-method taesd
